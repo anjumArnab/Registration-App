@@ -115,7 +115,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      LoginScreen()));
+                                      const LoginScreen()));
                         },
                         child: const Text("Login"))
                   ],
@@ -139,8 +139,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     pref.setString("userData", jsonString);
     pref.setBool("isLogin", true);
 
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => const HomeScreen()));
   }
 
   void initPreferences() async {

@@ -42,7 +42,7 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoggedIn == true ? HomeScreen() : LoginScreen();
+    return isLoggedIn == true ? const HomeScreen() : const LoginScreen();
   }
 
   void initPreferences() async {

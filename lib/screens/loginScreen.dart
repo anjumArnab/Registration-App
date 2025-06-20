@@ -6,7 +6,7 @@ import 'homeScreen.dart';
 import 'registrationScreen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  RegistrationScreen()));
+                                  const RegistrationScreen()));
                     },
                     child: const Text("Register"))
               ],
@@ -87,7 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginUser() async {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => const HomeScreen()));
   }
 }

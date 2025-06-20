@@ -1,5 +1,6 @@
-import 'dart:convert';
+// ignore_for_file: deprecated_member_use
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/userModel.dart';
@@ -14,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late SharedPreferences pref;
-  User? user = null;
+  User? user;
 
   @override
   void initState() {
@@ -26,9 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            user != null ? Text("Welcome, ${user!.username}") : Text("Welcome"),
-        actions: [IconButton(onPressed: logout, icon: Icon(Icons.logout))],
+        title: user != null
+            ? Text("Welcome, ${user!.username}")
+            : const Text("Welcome"),
+        actions: [
+          IconButton(onPressed: logout, icon: const Icon(Icons.logout))
+        ],
       ),
       body: Center(
         child: user != null
@@ -44,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         "User Information",
                         style: TextStyle(
                           fontSize: 18,
@@ -52,49 +56,49 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.deepOrange,
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.deepOrangeAccent,
                         thickness: 1,
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Username:",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                           Text(user!.username),
                         ],
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Email:",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                           Text(user!.email),
                         ],
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Phone no:",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                           Text(user!.phoneNo),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                     ],
                   ),
                 ),
               )
-            : CircularProgressIndicator(
+            : const CircularProgressIndicator(
                 color: Colors.white,
               ), // Show loader until data is available
       ),
@@ -113,6 +117,6 @@ class _HomeScreenState extends State<HomeScreen> {
     pref.setBool("isLogin", false);
 
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => Wrapper()));
+        MaterialPageRoute(builder: (BuildContext context) => const Wrapper()));
   }
 }
