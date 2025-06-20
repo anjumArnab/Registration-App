@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sharedpref/presentation/screens/homeScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'presentation/screens/loginScreen.dart';
+import '../screens/homeScreen.dart';
+import '../screens/loginScreen.dart';
 
 void main() {
-  runApp(SharedPref());
+  runApp(const SharedPref());
 }
 
 class SharedPref extends StatelessWidget {
+  const SharedPref({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +18,14 @@ class SharedPref extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Wrapper(),
+      home: const Wrapper(),
     );
   }
 }
 
 class Wrapper extends StatefulWidget {
+  const Wrapper({super.key});
+
   @override
   State<Wrapper> createState() => _WrapperState();
 }

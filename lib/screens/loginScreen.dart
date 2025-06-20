@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import '../widgets/CustomElevatedButton.dart';
 
-import '../widgets/customWidgets.dart';
+import '../widgets/CustomTextField.dart';
 import 'homeScreen.dart';
 import 'registrationScreen.dart';
 
@@ -18,9 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepOrangeAccent.shade100,
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent.shade100,
         title: const Text("Login"),
       ),
       body: Padding(
@@ -28,15 +27,44 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            customTextField(emailController, "Email"),
-            customPasswordTextField(passwordController, "Password"),
-            ElevatedButton(
-              onPressed: loginUser,
-              child: const Text(
-                "Login",
-                style: const TextStyle(fontSize: 18),
-              ),
+            CustomTextField(
+              controller: emailController,
+              label: "Email",
+              prefixIcon: Icons.email,
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                if (!value.contains('@')) {
+                  return 'Please enter a valid email';
+                }
+                return null;
+              },
             ),
+            const SizedBox(height: 10),
+            CustomTextField(
+              controller: passwordController,
+              label: "Password",
+              isPassword: true,
+              prefixIcon: Icons.lock,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                if (value.length < 6) {
+                  return 'Password must be at least 6 characters';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 15),
+            CustomElevatedButton(
+              onPressed: loginUser,
+              label: "Log In",
+              icon: Icons.login_rounded,
+            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

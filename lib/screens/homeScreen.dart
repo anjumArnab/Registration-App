@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../data/models/userModel.dart';
-import '../../main.dart';
+import '../model/userModel.dart';
+import '../main.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -26,9 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepOrangeAccent.shade100,
       appBar: AppBar(
-        backgroundColor: Colors.orangeAccent.shade100,
         title:
             user != null ? Text("Welcome, ${user!.username}") : Text("Welcome"),
         actions: [IconButton(onPressed: logout, icon: Icon(Icons.logout))],
