@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../screens/homeScreen.dart';
-import '../screens/loginScreen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'screens/homepage.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(const SharedPref());
@@ -16,7 +17,7 @@ class SharedPref extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Registration',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: const Wrapper(),
     );
@@ -42,7 +43,7 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoggedIn == true ? const HomeScreen() : const LoginScreen();
+    return isLoggedIn == true ? const Homepage() : const LoginScreen();
   }
 
   void initPreferences() async {
