@@ -198,6 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 16),
                   CustomElevatedButton(
+                    backgroundColor: Theme.of(context).primaryColor,
                     onPressed: _isLoading ? null : loginUser,
                     label: _isLoading ? "Logging in..." : "Log In",
                     icon: _isLoading ? null : Icons.login_rounded,

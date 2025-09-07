@@ -241,6 +241,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   const SizedBox(height: 24),
                   CustomElevatedButton(
+                    backgroundColor: Theme.of(context).primaryColor,
                     onPressed: registerUser,
                     label: "Register",
                     icon: Icons.person_add_rounded,
@@ -254,19 +255,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         style: TextStyle(color: Colors.grey.shade600),
                       ),
                       TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const LoginScreen()));
-                          },
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ))
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const LoginScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
