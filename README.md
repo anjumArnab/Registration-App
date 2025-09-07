@@ -1,9 +1,9 @@
-# Shared Preferences in Flutter - Registration & Login System
+# Flutter Shared Preferences
 
-This project demonstrates a simple registration and login system in Flutter using the **Shared Preferences** package to store user data locally.
+Flutter app with mock registration and login system using the **Shared Preferences** package.
 
-## Features
-- User Registration with username, email, phone number, and password.
-- Local storage of user data using Shared Preferences.
-- Persistent login state.
-- Login and logout functionality.
+## Screenshots
+![Log In](assets/t01.png)
+![Registration](assets/t02.png)
+![Home](assets/t03.png)
+
