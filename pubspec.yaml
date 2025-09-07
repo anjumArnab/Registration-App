@@ -1,5 +1,5 @@
 name: sharedpref
-description: "A new Flutter project."
+description: ""
 
 publish_to: 'none'
 
@@ -14,6 +14,7 @@ dependencies:
   shared_preferences: ^2.3.5
 
   cupertino_icons: ^1.0.8
+  google_fonts: ^6.3.1
 
 dev_dependencies:
   flutter_test:
