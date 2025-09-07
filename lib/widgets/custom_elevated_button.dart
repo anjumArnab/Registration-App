@@ -25,7 +25,6 @@ class CustomElevatedButton extends StatelessWidget {
     required this.onPressed,
     required this.label,
     this.icon,
-    this.backgroundColor = const Color(0xFF1976D2),
     this.iconColor = Colors.white,
     this.textColor = Colors.white,
     this.elevation = 5,
@@ -39,6 +38,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.showLoadingIndicator = false,
     this.disabledBackgroundColor,
     this.disabledForegroundColor,
+    this.backgroundColor,
     this.foregroundColor,
   });
 
