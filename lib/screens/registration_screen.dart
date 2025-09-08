@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../model/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../services/shared_pref.dart';
 import '../widgets/custom_elevated_button.dart';
 import '../widgets/custom_text_field.dart';
 import 'homepage.dart';
@@ -20,8 +19,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-
-  late SharedPreferences pref;
 
   // Email validation regex
   String? validateEmail(String? value) {
@@ -118,24 +115,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             email: emailController.text.trim().toLowerCase(),
             phoneNo: phoneController.text.trim());
 
-        String jsonString = jsonEncode(user);
-        await pref.setString("userData", jsonString);
-        await pref.setBool("isLogin", true);
+        // Save user data using SharedPref service
+        bool userSaved = await SharedPref.saveUserData(user);
+        if (userSaved) {
+          await SharedPref.setLoginStatus(true);
 
-        // Show success message
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Registration successful!'),
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 2),
-            ),
-          );
+          // Show success message
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Registration successful!'),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 2),
+              ),
+            );
 
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const Homepage()));
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => const Homepage()));
+          }
+        } else {
+          throw Exception('Failed to save user data');
         }
       } catch (e) {
         // Handle registration error
@@ -159,16 +160,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       );
     }
-  }
-
-  void initPreferences() async {
-    pref = await SharedPreferences.getInstance();
-  }
-
-  @override
-  void initState() {
-    initPreferences();
-    super.initState();
   }
 
   @override

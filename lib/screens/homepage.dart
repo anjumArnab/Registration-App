@@ -1,9 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
+import '../services/shared_pref.dart';
 import '../main.dart';
 
 class Homepage extends StatefulWidget {
@@ -14,27 +13,33 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  late SharedPreferences pref;
   User? user;
 
-  void initPreferences() async {
-    pref = await SharedPreferences.getInstance();
-
-    setState(() {
-      user = User.fromJson(jsonDecode(pref.getString("userData")!));
-    });
+  void initUserData() {
+    // Get user data using SharedPref service
+    User? userData = SharedPref.getUserData();
+    if (userData != null) {
+      setState(() {
+        user = userData;
+      });
+    }
   }
 
   void logout() async {
-    pref.setBool("isLogin", false);
+    // Set login status to false using SharedPref service
+    await SharedPref.setLoginStatus(false);
 
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => const Wrapper()));
+    if (mounted) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => const Wrapper()));
+    }
   }
 
   @override
   void initState() {
-    initPreferences();
+    initUserData();
     super.initState();
   }
 

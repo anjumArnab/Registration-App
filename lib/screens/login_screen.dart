@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user.dart';
+import '../services/shared_pref.dart';
 import '../widgets/custom_elevated_button.dart';
 import '../widgets/custom_text_field.dart';
 import 'homepage.dart';
@@ -53,46 +52,53 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       try {
-        // Get SharedPreferences instance
-        final SharedPreferences pref = await SharedPreferences.getInstance();
+        // Check if user data exists using SharedPref service
+        if (SharedPref.hasUserData()) {
+          // Get stored user data
+          User? storedUser = SharedPref.getUserData();
 
-        // Check if user data exists
-        String? userDataString = pref.getString("userData");
+          if (storedUser != null) {
+            // Verify credentials
+            String enteredEmail = emailController.text.trim().toLowerCase();
+            if (storedUser.email.toLowerCase() == enteredEmail) {
+              // For this mock app, we'll assume the password is correct if email matches
 
-        if (userDataString != null) {
-          // Parse stored user data
-          Map<String, dynamic> userData = jsonDecode(userDataString);
-          User storedUser = User.fromJson(userData);
+              await SharedPref.setLoginStatus(true);
 
-          // Verify credentials
-          String enteredEmail = emailController.text.trim().toLowerCase();
-          if (storedUser.email.toLowerCase() == enteredEmail) {
-            // For this mock app, we'll assume the password is correct if email matches
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Login successful!'),
+                    backgroundColor: Colors.green,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
 
-            await pref.setBool("isLogin", true);
-
-            if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Login successful!'),
-                  backgroundColor: Colors.green,
-                  duration: Duration(seconds: 2),
-                ),
-              );
-
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => const Homepage(),
-                ),
-              );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const Homepage(),
+                  ),
+                );
+              }
+            } else {
+              // Invalid credentials
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Invalid email or password'),
+                    backgroundColor: Colors.red,
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+              }
             }
           } else {
-            // Invalid credentials
+            // Error retrieving user data
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Invalid email or password'),
+                  content: Text('Error retrieving user data'),
                   backgroundColor: Colors.red,
                   duration: Duration(seconds: 3),
                 ),
