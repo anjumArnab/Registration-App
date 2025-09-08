@@ -23,6 +23,7 @@ class SharedPrefApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Registration',
       theme: ThemeData(
+	scaffoldBackgroundColor: Colors.white,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: const Wrapper(),
