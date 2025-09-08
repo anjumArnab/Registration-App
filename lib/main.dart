@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'services/shared_pref.dart';
 import 'screens/homepage.dart';
 import 'screens/login_screen.dart';
 
-void main() {
-  runApp(const SharedPref());
+void main() async {
+  // Ensure Flutter is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize SharedPreferences
+  await SharedPref.init();
+
+  runApp(const SharedPrefApp());
 }
 
-class SharedPref extends StatelessWidget {
-  const SharedPref({super.key});
+class SharedPrefApp extends StatelessWidget {
+  const SharedPrefApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +38,11 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  late SharedPreferences pref;
   bool? isLoggedIn = false;
 
   @override
   void initState() {
-    initPreferences();
+    initLoginStatus();
     super.initState();
   }
 
@@ -46,10 +51,11 @@ class _WrapperState extends State<Wrapper> {
     return isLoggedIn == true ? const Homepage() : const LoginScreen();
   }
 
-  void initPreferences() async {
-    pref = await SharedPreferences.getInstance();
+  void initLoginStatus() {
+    // Get login status using SharedPref service
+    bool loginStatus = SharedPref.getLoginStatus();
     setState(() {
-      isLoggedIn = pref.getBool("isLogin");
+      isLoggedIn = loginStatus;
     });
   }
 }
